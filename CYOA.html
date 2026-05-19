@@ -1,0 +1,312 @@
+// Bit Bandits CYOA - Murder Mystery
+
+// --- Background ---
+function background(p) {
+    document.body.style.margin = "0";
+    document.body.style.height = "100vh";
+    document.body.style.display = "flex";
+    document.body.style.justifyContent = "center";
+    document.body.style.alignItems = "center";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.fontFamily = "Georgia, serif";
+}
+
+// --- Create Text Box ---
+function createTextbox(id){
+    const box = document.createElement("div");
+    box.id = id;
+    box.style.width = "60%";
+    box.style.background = "rgba(0, 0, 0, 0.6)";
+    box.style.padding = "20px 30px";
+    box.style.borderRadius = "10px";
+    box.style.color = "white";
+    box.style.fontSize = "1.2rem";
+    box.style.lineHeight = "1.6rem";
+    box.style.whiteSpace = "pre-wrap"; 
+    box.style.boxShadow = "0 0 15px rgba(0,0,0,0.5)";
+    document.body.appendChild(box);
+}
+
+// --- Update Screen ---
+async function updateScreen(id, p) {
+    document.body.style.backgroundImage = p.bg;
+    let tb = document.getElementById(id);
+    let text = p.text[0];
+    for (let i = 1; tb && i < p.text.length; i++) {
+        text += ` ${p.text[i]}`;
+    }
+    tb.textContent = text;
+}
+
+// --- Wait for ENTER ---
+function waitingKeypress() {
+    return new Promise((resolve) => {
+        function onKeyHandler(e) {
+            if (e.key === "Enter") {
+                document.removeEventListener("keydown", onKeyHandler);
+                resolve();
+            }
+        }
+        document.addEventListener("keydown", onKeyHandler);
+    });}
+
+// --- Wait for Y / N ---
+function waitForChoice() {
+    return new Promise((resolve) => {
+        function onKeyHandler(e) {
+            if (e.key === "y" || e.key === "n") {
+                document.removeEventListener("keydown", onKeyHandler);
+                resolve(e.key);
+            }
+        }
+        document.addEventListener("keydown", onKeyHandler);
+    });}
+
+// --- Story Data ---
+story = {
+    p1: {
+        bg: "url('https://thumbs.dreamstime.com/b/bit-game-style-spring-summer-night-forest-horizontal-background-307639971.jpg')",
+        text: [
+            "It is the year 1928 and you are traveling to your family's estate.",
+            "You are but a humble detective and are there to visit your esteemed family.",
+            "But secretly, you are there to solve a case. It is the case of Mary Johnson, your elder cousin.",
+            "Ever since that day, you have been searching for answers on who killed her. But now is your chance,",
+            "to get revenge for your cousin, and to make it so you don't have to go through this pain again...                                                       Press Enter to Continue..."
+        ]},
+    p2: {
+        bg: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS22sOXAOkGGplbgVVeAvPBwQS8cQDvkpxvYQ&s')",
+        text: [
+            "You have now arrived at the estate. You feel excited but also wary. You haven’t been here since the death of your cousin which makes you feel a sense of grief." ,
+            "You open the door into the manor and get hit with the sounds of stupidity. You walk into the living room and see all of your family. Half of you wants to stay and try to",
+            "figure out who may be the suspect but the other half wants to go to the room you always stay in. What do you choose?" //Choice 1: p3 & p11
+        ]},
+    p3: {
+        bg: "url('https://files.idyllic.app/files/static/2631374?width=384&optimizer=image')",
+        text: [
+            "You choose to stay and try to uncover who it may be. You go and sit down next to your favorite",
+            "Uncle. As the night gets closer, you find out that your Grandma Helen, your Aunt Dorothry, and",
+            "your other cousin Thomas Jr., may be the suspects for the murder. As everyone starts to leave",
+            "the room, you notice someone walking towards the shed. Thinking not too much of it, you head",
+            "towards the kitchen to cook a meal. As you head towards it you see your Uncle and Aunt arguing.",
+            "You aren’t 100% sure what they’re saying but you do hear your cousin getting mentioned and something",
+            "about a mistake. It could be the death of your other cousin or something different entirely.",
+            "You can either choose to ask them or get something to eat." // Choice 2: p & p5
+        ]},
+    p4: {
+        bg: "url('https://images.nightcafe.studio/jobs/taVmKqw67qsmF04K3g9S/taVmKqw67qsmF04K3g9S--1--5h0f0.jpg')",
+        text: [
+            "You walk towards them and just as you’re about to ask them the question, they change the subject and greet you.",
+            "They pretend nothing that they said was anything of importance. They soon leave you there by yourself and think it’s best to head to your room.",
+            "You go to your room and decide to take a nap before you go and investigate more. You wake up and look out the window. It’s dark out and the moon is shining through your window.",
+            "You go and look out the window and see your cousin, Thomas Jr., , Thomas dragging a body across the yard, into the woods. As you continue to look at this body",
+            "you see that it is your cousin. You decide that it's too late to take revenge and decide to go home the next morning. I GUESS YOU SURIVED...",
+         ]},
+    p5: {
+        bg: "url('https://i.pinimg.com/736x/88/20/4d/88204d54bd494ccd3a83207c8b4391c1.jpg')",
+        text: [
+            "You decide it’s probably better to leave them be and head to the kitchen. As you walk in you see your Cousin’s sister sitting by herself eating what appears to be meatballs.",
+            "You ask her if you can have some and she points to the pot with them inside. You grab some and head outside to eat them.",
+            "As you’re eating you contemplate whether to head to your room or go to check the shed." // Choice 3: p9 & p6
+        ]},
+    p6: {
+        bg: "url('https://pics.craiyon.com/2023-09-29/084635969d074dbda29dd35a05068cc4.webp')",
+        text: [
+            "You decide to go and check the shed. As you walk towards it, you see that there is some blood leading to the shed.",
+            "You follow the path and open the shed door. No one appears to be in there but once you walk in, you see a corpse.",
+            "You analyze the body and after a few minutes, you see that it is the body of your cousin. You contemplate on if you",
+            "should go tell someone or if you should stay and analyze the shed for more evidence. What do you choose?" // Choice 4: p7 & p8
+        ]},
+    p7: {
+        bg: "url('https://media.craiyon.com/2025-04-13/2VICxhXbSiqFeESgfBXtJQ.webp')",
+        text: [
+            "You decide to go tell someone but as you walk out the shed door you ram into you cousin Thomas Jr.",
+            "He has a knife in his hand and as you look up at his face, you see that he is grinning.",
+            "You realize that you lost and that you won’t be able to get revenge for your cousin. YOUR DEAD........"
+        ]},
+    p8: {
+        bg: "url('https://media.craiyon.com/2025-04-13/2VICxhXbSiqFeESgfBXtJQ.webp')",
+        text: [
+            "You stay and analyze the shed for more clues but as you see a note addressed to your cousin Thomas Jr. you hear footsteps in front of the shed door.",
+            "You run to hide in a crate. You hear the door open and someone walking towards the body. The person starts talking and he sounds a lot like your cousin Thomas Jr..",
+            "You are shocked and almost yell. After a while, you hear your cousin go out of the shed. After a few minutes, you get out of the crate and walk towards the table with",
+            "the letter. You grab it and hesitate on if you should leave and go back to the house or if you should grab your cousin's body and leave the estate all together. What do you choose? " // Choice 5 p9 & p10
+        ]},
+    p9: {
+        bg: "url('https://images.nightcafe.studio/jobs/taVmKqw67qsmF04K3g9S/taVmKqw67qsmF04K3g9S--1--5h0f0.jpg')",
+        text: [
+         "You go back to the house and decide to go to sleep early. As you are drifting off, you feel that something's off.",
+         "You hear the door open and just think it is the wind but a few seconds later you feel a presence standing over you.",
+         "Next thing you know, your chest hurts. YOUR DEAD...."   
+        ]},
+    p10: {
+        bg: "url('https://media.craiyon.com/2025-04-13/2VICxhXbSiqFeESgfBXtJQ.webp')",
+        text: [
+         "You decide to grab a tarp that's on a shelf in the shed and put your cousin's body in it.",
+         "You escape the estate and make it home. You bury the body in your backyard and hope that she is now satisfied. YOU WON CONGRATS!!!!" 
+        
+        ]},
+    p11: {
+        bg: "url('https://images.nightcafe.studio/jobs/taVmKqw67qsmF04K3g9S/taVmKqw67qsmF04K3g9S--1--5h0f0.jpg')",
+        text: [
+          "You just say hey and head towards the room. You go up to the main stairs and go to the 3rd room on the right. If you remember right, the room next to it is a room that no one is allowed in.",
+          "You have always thought it was weird but this time, you sense a weird presence from the room. You decide that you should look at that later when everyone is asleep.",
+          "You unlock your door and walk into the room. You are met with the smell of decay. You don’t seem to be too shocked, oddly enough, but you do wonder why. You think that it may be from the room next to it so you take note and remind yourself to look for the source later.",
+          "You walk towards your bed and start to unpack your belongings. Once you are done you question on if you should go back down stairs and get food or if you should go on a stroll outside. What do you choose?" // Choice 6: p12 & p13
+        ]},
+    p12: {
+        bg: "url('https://i.pinimg.com/736x/88/20/4d/88204d54bd494ccd3a83207c8b4391c1.jpg')",
+        text: [
+           "You go down stairs and are shocked by how empty it is. There is only your cousin's sister sitting at the counter in the kitchen. You see that she is engrossed in a word search about different kinds of birds.",
+            "You leave her be as you walk by to get the meat to make meatballs. You love meatballs and can’t wait to have some sort of comfort in this foreign place.",
+           "As you finish making your meal, your cousin looks up and has an expression of wanting meatballs too. You give her some and take the rest outside. You sit down in a porch chair and look towards the forest as you eat your meatballs.",
+           "Once you finish eating, you think about either going into the house and looking into where that smell was coming from earlier or if you should go on that walk that you wanted to take earlier. What should you choose?" // Choice 7: p16 & p
+        ]},
+    p13: {
+        bg: "url('https://media.craiyon.com/2025-04-13/2VICxhXbSiqFeESgfBXtJQ.webp')",
+        text: [
+            "As you walk down the steps and turn the corner, something catches your eye. A shadow in front of the shed in the backyard. Out of curiosity you decide to investigate and see if anyone is there.",
+            "Before you enter however, you check to make sure the coast is clear. Soon you walk towards and catch a foul stench coming from inside it. You open the door and notice the body of your cousin.",
+            "Half decayed with multiple lacerations and a hole in her head. You also notice a body axe resting on the table and strands of long brown hair.",
+            "There on the wall a picture of her as well as a paper that reads, “We had to do this. Thomas Jr. cracked through the abuse and the thought of money not going to him but instead to his bratty cousin.",
+            "The body will soon be disposed of. - Dorothy. Distraught you either call for back up or go it alone"
+        ]},
+    p14: {
+        bg: "url('https://pics.craiyon.com/2023-09-29/084635969d074dbda29dd35a05068cc4.webp')",
+        text: [
+          "You immediately call for backup and as you turn to leave, you notice your cousin coming to the shed. The rush of adrenaline kicks in and you run to the opposite side of the house.",
+           "As you look behind you notice him gaining on you and he has a knife in hand. Soon he pouches on you and tries to stab you with the knife. However you have the upperhand in this fight and forces him to the ground and in panic,",
+          "you stab him in the stomach. He’s still alive but in excruciating pain. He curses at you and tells you “You idiot, if you weren’t here, I would’ve gotten away with it and now I’m stuck in prison for the rest of my life.",
+          "Soon backup arrives and sees the damage that had been done. They took your uncle, aunt, and cousin into custody. Later analysis showed that Thomas Jr. was suffering from depression and due to the constant annoyance from your cousin,",
+          "Eventually he snapped and murdered her in cold blood. His parents were charged as well and also were found to have been the assailants that caused the town to shake in fear 10 years ago. The Axeman of New Orleans was under your nose the whole time. However this case actually has a good ending. You stopped the murders from happening again and finally, New Orleans can be at peace again. I GUESS THIS IS A GOOD ENDING...",
+           
+        ]},
+    p15: {
+        bg: "url('https://imgcdn.stablediffusionweb.com/2024/12/5/ae89e9aa-5406-4d0c-af4d-c32b58335507.jpg')",
+        text: [
+        "Deciding it’d be better to do it alone, you ready your weapon you found, an axe with blood stains from the deceased. Since the layout of your house has been engrained in your brain for years, you set up the trap in a room with a meat grinder inside.",
+        "The plan soon begins. Thomas Jr., help me dispose of the body. It was your fault after all because you decided to snap on her and now look at the mess,” Said your Uncle. Soon Thomas Jr. arrives in the room and you enact your plan. You rush out of the shadows and in a split second you knock your uncle to the floor.",
+        "Thomas Jr. rushes behind you and you end swinging your axe into his leg. He soon tumbles to the ground screaming in agony as your Uncle regains his footing and charges at you.",
+        "Soon you’re in a stalemate as you both crash around the meat grinder. He gets the advantage on you and soon you both reach the meat grinder. Your Uncle turns it on in hopes to turn you to meet, however he hears your Aunt rushing up the stairs and seeing your chance, you act. You shove into the meat grinder and as you hear his screams, you hear the crunch of his bones. Soon he was nothing but mush.",
+        "Your Aunt rushes in the room and sees the carnage. Your dead Uncle and Cousin lay on the ground in agony and didn't see you until you rushed out of the darkness once more and bash her in the head with the axe you grabbed from the Cousin and soon she was dead.",
+        "Eventually this reached local news. The bodies were found including the one in the shed. Jr. was reached to the hospital and then committed to the insane asylum where you are right now. All you hear is the screams of the insane and there he is, mentally insane and banging himself on the walls. While you feel slightly sorry for him, he caused the death of someone you cared for and now at long last New Orleans can sleep once again."   
+        ]},
+    p16: {
+        bg: "url('https://imgcdn.stablediffusionweb.com/2024/12/5/ae89e9aa-5406-4d0c-af4d-c32b58335507.jpg')",
+        text: [
+            "You decide to go back into the house and investigate that room next to yours. Once you get to the front of the door, you hear a sound from down the hall.",
+            "You rush into the room and close the door really fast. It is pitch black in the room but after you hear someone walking past the door, you push the light switch on.",
+            "After your eyes take a second to adjust, you are met with a small room. There is a very damaged bed with a table next to it, with a meat grinder on it.", 
+            "You look at the walls and see blood. As you walk towards this machine, you see there is a small barrel. You look inside it and see a human arm. You put two and two together and are disgusted by the thought.", 
+            "You didn’t eat normal meat, you ate human meat! You are confused and think you should either run and tell someone or you should just go to the bathroom and puke. What do you choose?"
+        ]},
+    p17: {
+        bg: "url('https://files.idyllic.app/files/static/2631374?width=384&optimizer=image')",
+        text: [
+        "You decide to go to the bathroom and puke. After you are done, you wash your hands and leave the bathroom. When you walk out, your Grandma walks past and pays you no mind.",
+        "You are still disgusted as you walk down the stairs and walk into the living room. Most of your family is in there and all turn their heads when you walk in. You go, sit down, and look for your cousin Thomas Jr..",
+        "Your Grandma clears her throat and you turn and lock eyes with her. Based on the way she’s looking at you, you realize that it was Thomas Jr. all along. You think back to how he was acting before your cousin was murdered and you realize that he is not around whenever you aren’t with your family.",
+        "You shoot up from your seat and go into the kitchen. You spot a kitchen knife and debate on if you should go and get revenge or if you should just leave the house. What do you choose?"   
+        ]},
+
+    p18: {
+        bg: "url('https://pics.craiyon.com/2023-09-29/084635969d074dbda29dd35a05068cc4.webp')",
+        text: [
+            "You grab the knife and head towards the shed.", 
+            "As your cousin walks out, you take your revenge. YOU WON THE GAME! CONGRATS IG! IT'S NOT THAT IMPRESSIVE THOU."
+        ]},
+    p19: {
+        bg: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS22sOXAOkGGplbgVVeAvPBwQS8cQDvkpxvYQ&s')",
+        text: [
+            "You decide that you should just leave the estate. As you get older, the more you realize that you made the right decision.", 
+            "Yes, you may have gone through that pain, but there was no reason to get your hands dirty. YOU WON WHILE MAINTAINING YOUR SANITY! CONGRATS IG!"
+        ]},
+    p20: {
+        bg: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrGzcu0YehbUPB8RFJADyCJjFqlU7SxWztPg&s')",
+        text: [
+         "You run immediately out of the room. As you run, you vomit up the flesh you just ate.",
+         "You make your way outside and run towards the shed. You run inside and close the door. As you turn around you see your Aunt, Uncle, and Thomas Jr. standing around a pile of something. As your relatives turn around,",
+         "You see the body of who that arm belonged to. You stand there in shock and your relatives start walking towards you. One has a knife, one has a meat cleaver, and one has an axe. In your final moments, you hope that someone will remember you and you apologize for not taking revenge for your cousin. YOUR DEAD…"   
+        ]}}
+
+// --- Story Sequence ---
+async function storySequence() {
+    background();
+    createTextbox("main");
+
+    // p1
+    updateScreen("main", story.p1);
+    await waitingKeypress();
+
+    // p2
+    updateScreen("main", story.p2);
+    let c1 = await waitForChoice();
+
+    // ---- PATH 1: STAY (p3) ----
+    if (c1 === "y") {
+        updateScreen("main", story.p3);
+        let c2 = await waitForChoice();
+
+        if (c2 === "y") {
+            updateScreen("main", story.p4);
+            return;
+        }
+
+        updateScreen("main", story.p5);
+        let c3 = await waitForChoice();
+
+        if (c3 === "y") {
+            updateScreen("main", story.p9);
+            return;
+        }
+
+        updateScreen("main", story.p6);
+        let c4 = await waitForChoice();
+
+        if (c4 === "y") {
+            updateScreen("main", story.p7);
+            return;
+        }
+
+        updateScreen("main", story.p8);
+        let c5 = await waitForChoice();
+
+        if (c5 === "y") {
+            updateScreen("main", story.p9);
+        } else {
+            updateScreen("main", story.p10);
+        }
+        return;
+    }
+
+    // ---- PATH 2: ROOM (p11) ----
+    updateScreen("main", story.p11);
+    let c6 = await waitForChoice();
+
+    if (c6 === "y") {
+        updateScreen("main", story.p12);
+        let c7 = await waitForChoice();
+
+        if (c7 === "y") {
+            updateScreen("main", story.p16);
+            let c9 = await waitForChoice();
+
+            if (c9 === "y") {
+                updateScreen("main", story.p17);
+                let c10 = await waitForChoice();
+                updateScreen("main", c10 === "y" ? story.p18 : story.p19);
+            } else {
+                updateScreen("main", story.p20);
+            }
+        } else {
+            updateScreen("main", story.p14);
+        }
+        return;
+    }
+
+    updateScreen("main", story.p13);
+    let c8 = await waitForChoice();
+    updateScreen("main", c8 === "y" ? story.p14 : story.p15);
+}
+
+storySequence();     
