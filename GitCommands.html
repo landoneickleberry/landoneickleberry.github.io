@@ -1,16 +1,173 @@
-clone: creates a duplicate of a repo locally.
-checkout: swapping to a seperate branch entirely.
--b: creates a new branch and switches to it.
-status: inspects the current state of the git repository.
-push: used to upload local repository content to a remote repository.
--u: used to link a local branch to a specific remote branch.
-pull: updates your local project with changes from a remote server.
-add: move changes from your working directory to the staging area.
-commit: a snapshot of your project's files at a specific point in time, acting as a "save point" in your repository's history.
--m: save a snapshot of your staged changes to the local repository with a specific message..
--a: shortcut that automatically stages every file that is already tracked and has been modified or deleted, then performs the commit in a single step.
--am: a combined command that allows you to stage modified files and commit them with a message in a single step.
-branch: a lightweight, movable pointer to a specific commit.
--a: used to list all branches in your repository, including both local and remote-tracking branches.
--d: used to safely delete a local branch in Git.
-merge: the process of integrating changes from one branch into another.
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title></title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <ul>
+<li>clone: creates a duplicate of a repo locally.</li>
+<li>checkout: swapping to a seperate branch entirely.
+<ul>
+<li>-b: creates a new branch and switches to it.</li>
+</ul>
+</li>
+<li>status: inspects the current state of the git repository.</li>
+<li>push: used to upload local repository content to a remote repository.
+<ul>
+<li>-u: used to link a local branch to a specific remote branch.</li>
+</ul>
+</li>
+<li>pull: updates your local project with changes from a remote server.</li>
+<li>add: move changes from your working directory to the staging area.</li>
+<li>commit: a snapshot of your project's files at a specific point in time, acting as a &quot;save point&quot; in your repository's history.
+<ul>
+<li>-m: save a snapshot of your staged changes to the local repository with a specific message..</li>
+<li>-a: shortcut that automatically stages every file that is already tracked and has been modified or deleted, then performs the commit in a single step.</li>
+<li>-am: a combined command that allows you to stage modified files and commit them with a message in a single step.</li>
+</ul>
+</li>
+<li>branch: a lightweight, movable pointer to a specific commit.
+<ul>
+<li>-a: used to list all branches in your repository, including both local and remote-tracking branches.</li>
+<li>-d: used to safely delete a local branch in Git.</li>
+</ul>
+</li>
+<li>merge: the process of integrating changes from one branch into another.</li>
+</ul>
+
+            
+            
+        </body>
+        </html>
