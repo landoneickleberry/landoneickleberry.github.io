@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre>
+    SELECT Course.name, person.first_name, person.last_name 
+    FROM Course JOIN Person
+    WHERE person.id=course.professor
+    ORDER BY name, first_name, last_name;
+    
+    SELECT Course.name, person.first_name, person.last_name, house.name AS "house" 
+    FROM Course JOIN Person JOIN House
+    WHERE person.id=course.professor
+    AND person.house = house.id
+    ORDER BY course.name;
+    
+    SELECT Course.name, person.first_name, person.last_name 
+    FROM Course JOIN Person
+    WHERE person.id=course.professor
+    AND House = 1
+    ORDER BY name;
+    
+    SELECT  Person.last_name, Person.first_name
+    FROM Person
+    JOIN Enrollment ON Person.id = Enrollment.person
+    JOIN Course ON Enrollment.course = Course.id
+    WHERE Course.name = "Potions" 
+    ORDER BY last_name;
+    
+    SELECT Person.last_name, Person.first_name 
+    FROM Course
+    JOIN Person 
+    JOIN Enrollment
+    ON Enrollment.person = Person.id 
+    WHERE Course.name = "Potions" 
+    AND Enrollment.course = Course.id
+    AND Person.house <> 4
+    ORDER BY last_name;
+    
+    SELECT  Person.last_name, Person.first_name, House.name AS "house"
+    FROM Person
+    JOIN Enrollment
+    ON Enrollment.person = Person.id
+    JOIN Course 
+    ON Course.id = Enrollment.course
+    JOIN House 
+    ON House.id = Person.house
+    WHERE Course.name = "Defense Against the Dark Arts"
+    ORDER BY house, last_name, first_name;
+    
+    SELECT Course.name
+    FROM Course
+    JOIN Enrollment ON Enrollment.course = Course.id
+    JOIN Person ON Person.id = Enrollment.person
+    WHERE Person.first_name = "Neville"
+    AND Person.last_name = "Longbottom"
+    ORDER BY Course.name ASC;
+    
+
+</pre>
+
+</body>
+
+</html>

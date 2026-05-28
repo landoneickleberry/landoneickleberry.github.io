@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre>
+
+SELECT name
+FROM House
+ORDER BY name DESC;
+
+SELECT first_name, last_name
+FROM Person
+WHERE last_name
+LIKE "P%"
+ORDER BY last_name, first_name DESC;
+
+SELECT Person.first_name, Person.last_name, House.name AS "house"
+FROM Person JOIN House
+WHERE Person.house = House.id
+AND Person.house = 1;
+
+SELECT Home.name AS "Home", Away.name AS "Away"
+FROM House AS Home JOIN House AS Away
+WHERE Home.id <> Away.id
+AND Away.id = 3
+
+
+</pre>
+</body>
+</html>

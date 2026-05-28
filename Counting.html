@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre>
+SELECT COUNT(*) AS "Num Weasleys"
+FROM Person
+WHERE last_name = "Weasley"; 
+
+SELECT COUNT(*) AS "Num Students"
+FROM Course
+JOIN Enrollment
+ON Enrollment.course = Course.id
+AND Course.name = "Transfiguration";
+
+SELECT COUNT(*) AS "Num Students"
+FROM Person
+WHERE first_name 
+LIKE "%z%";
+
+SELECT Course.name AS "Course", COUNT(*) AS "Enrollment"
+FROM Enrollment
+JOIN Course ON Enrollment.course = Course.id
+GROUP BY Course
+ORDER BY Enrollment DESC, Course ASC;
+
+SELECT Course.name AS "Course", COUNT(*) AS "Enrollment"
+FROM Course
+JOIN Enrollment ON Enrollment.course = Course.id
+JOIN Person ON Person.id = Enrollment.person
+WHERE Person.house = 2
+GROUP BY Course.name
+ORDER BY Enrollment DESC, Course.name;
+
+SELECT House.name AS "House", COUNT(*) AS "Professors"
+FROM House
+JOIN Person ON House.id = Person.house
+JOIN Course ON Person.id = Course.professor
+GROUP BY House.name 
+ORDER BY House.name;
+</pre>
+</body>    
+</html>

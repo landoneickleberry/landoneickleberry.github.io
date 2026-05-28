@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre>
+SELECT Course.name AS "Course", Person.last_name AS "Professor Last Name", COUNT(*) AS "Enrollment"
+FROM Course
+JOIN Enrollment ON Course.id = Enrollment.course
+JOIN Person ON Person.id = Course.professor
+GROUP BY Enrollment.course
+HAVING COUNT(*) >= 18
+ORDER BY Enrollment DESC;
+
+SELECT Person.last_name AS "Family", COUNT(*) AS "Count"
+FROM Person
+GROUP BY last_name
+HAVING Count > 1
+ORDER BY Count DESC, Family ASC;
+
+SELECT Course.name AS "Course"
+FROM Course
+JOIN Enrollment ON Enrollment.course = Course.id
+WHERE Course.name
+LIKE  "C%"
+GROUP BY Course.id, Course.name
+HAVING COUNT(*) >= 15;
+
+SELECT first_name, last_name
+FROM Person
+ORDER BY last_name DESC, first_name DESC
+LIMIT 5;
+
+SELECT Person.first_name, Person.last_name, COUNT(*) AS "courses"
+FROM Person
+JOIN Enrollment ON Person.id = Enrollment.person
+GROUP BY Person.id, Person.first_name, Person.last_name
+ORDER BY courses DESC, last_name
+LIMIT 5;
+
+SELECT Person.first_name, Person.last_name
+FROM Person
+JOIN Course ON Course.professor = Person.id 
+JOIN Enrollment ON Enrollment.course = Course.id
+GROUP BY Person.id, Person.first_name, Person.last_name
+ORDER BY COUNT(*)
+LIMIT 1;
+</pre>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre>
+SELECT SUM(points) AS "Points"
+FROM HousePoint
+WHERE Receiver = 24;
+
+SELECT SUM(points) AS "Points"
+FROM HousePoint
+WHERE Giver = 94;
+
+SELECT SUM(points) AS "Points"
+FROM HousePoint, Person
+WHERE HousePoint.receiver = Person.id
+AND Person.house = 3
+</pre>   
+</body>    
+</html>
