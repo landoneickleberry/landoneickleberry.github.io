@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<p id = "web-page">
+		    Check out my website
+		</p>
+		<script>
+		    //Add your code here:
+		    //<a href = "https://www.codehs.com/sandbox">Here!</a>
+		    let link = document.createElement("a");
+            link.innerHTML = "Here!";
+            //We can set attributes directly by using the style attribute
+            link.setAttribute("href", "https://www.codehs.com/sandbox");
+            document.body.appendChild(link);
+		</script>
+	</body>
+</html>
